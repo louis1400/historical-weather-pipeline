@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# Data and local artifacts
+*.duckdb
+*.log
+.env
+.tmp/
+pytest-cache-files-*/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+
+# Keep folder structure but avoid committing generated data
+data/raw/*
+data/bronze/*
+data/silver/*
+data/gold/*
+!data/raw/.gitkeep
+!data/bronze/.gitkeep
+!data/silver/.gitkeep
+!data/gold/.gitkeep

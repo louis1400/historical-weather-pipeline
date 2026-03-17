@@ -1,0 +1,15 @@
+README.md
+pyproject.toml
+src/de_portfolio_pipeline/__init__.py
+src/de_portfolio_pipeline/config.py
+src/de_portfolio_pipeline.egg-info/PKG-INFO
+src/de_portfolio_pipeline.egg-info/SOURCES.txt
+src/de_portfolio_pipeline.egg-info/dependency_links.txt
+src/de_portfolio_pipeline.egg-info/requires.txt
+src/de_portfolio_pipeline.egg-info/top_level.txt
+src/de_portfolio_pipeline/models/warehouse.py
+src/de_portfolio_pipeline/pipelines/ingest.py
+src/de_portfolio_pipeline/pipelines/transform.py
+src/de_portfolio_pipeline/quality/checks.py
+src/de_portfolio_pipeline/utils/run_pipeline.py
+tests/test_transform.py

@@ -1,0 +1,170 @@
+Metadata-Version: 2.4
+Name: de-portfolio-pipeline
+Version: 0.1.0
+Summary: A beginner-friendly data engineering portfolio project using public APIs, DuckDB, and Streamlit.
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: duckdb>=1.2.0
+Requires-Dist: pandas>=2.2.0
+Requires-Dist: requests>=2.32.0
+Requires-Dist: streamlit>=1.44.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.3.0; extra == "dev"
+Requires-Dist: ruff>=0.11.0; extra == "dev"
+
+# Data Engineering Portfolio Project
+
+This repository is a practical first data engineering project you can use to show employers that you understand the core workflow:
+
+- ingest data from external APIs
+- store raw and cleaned data in layers
+- transform data into analytics-ready tables
+- validate data quality
+- present business metrics in a small dashboard
+
+## Project Idea
+
+Build a **Weather and Air Quality Analytics Pipeline** for a few European cities.
+
+Why this is a strong first project:
+
+- it uses real API data, which feels more professional than a toy CSV-only project
+- it demonstrates common data engineering patterns without needing cloud infrastructure on day one
+- it is realistic to finish as a student
+- it gives you a clean story to tell in interviews
+
+## What You Will Show
+
+By completing this project, you will be able to talk about:
+
+- API ingestion with Python
+- layered data design: raw, bronze, silver, gold
+- SQL transformations in DuckDB
+- data quality checks
+- reproducible project structure
+- dashboarding and stakeholder-style metrics
+- using Codex to accelerate development responsibly
+
+## Suggested Stack
+
+- Python
+- DuckDB
+- Pandas or Polars
+- SQL
+- Streamlit
+- `pytest`
+
+Optional later upgrades:
+
+- Prefect for orchestration
+- dbt-duckdb for modeling
+- Docker
+- GitHub Actions
+
+## Architecture
+
+```text
+Open-Meteo APIs
+    |
+    v
+data/raw/               <- unmodified API extracts
+    |
+    v
+data/bronze/            <- standardized schema, basic typing
+    |
+    v
+data/silver/            <- cleaned, deduplicated, enriched data
+    |
+    v
+data/gold/              <- analytics tables for dashboard/reporting
+    |
+    v
+dashboard/              <- Streamlit app with KPIs and charts
+```
+
+## Example Business Questions
+
+- Which city had the highest average PM2.5 level this month?
+- How often do poor air quality days coincide with high temperature days?
+- Which cities show the largest week-over-week change in air quality?
+- How many observations were missing or delayed by source?
+
+## Resume-Friendly Project Description
+
+You can adapt this for your CV later:
+
+> Built an end-to-end data pipeline in Python and DuckDB that ingested weather and air quality data from public APIs, transformed it into analytics-ready tables, applied data quality checks, and surfaced KPIs in a dashboard.
+
+## Recommended Build Order
+
+1. Get one API ingestion script working.
+2. Save the raw response locally.
+3. Flatten the data into tabular form.
+4. Load it into DuckDB.
+5. Create one clean analytics table in SQL.
+6. Add 2-3 data quality checks.
+7. Build a simple Streamlit dashboard.
+8. Add scheduling or orchestration if you still have time.
+
+## How To Talk About Codex
+
+The point is not "Codex wrote my code."
+The point is:
+
+- you used Codex to scaffold and speed up implementation
+- you reviewed and understood the code
+- you iterated on bugs, structure, and tests
+- you used AI as an engineering tool, not a substitute for judgment
+
+That is a very reasonable and modern story for a first job.
+
+## Starter Repo Layout
+
+```text
+src/de_portfolio_pipeline/
+  pipelines/
+  models/
+  quality/
+  utils/
+dashboard/
+data/
+  raw/
+  bronze/
+  silver/
+  gold/
+sql/
+tests/
+```
+
+## Next Steps
+
+- read `docs` in this README and the starter files
+- implement the API ingestion in `src/de_portfolio_pipeline/pipelines/ingest.py`
+- connect the transformation flow to DuckDB
+- add one dashboard page
+
+If you want, we can now build this project together step by step.
+
+## Quickstart
+
+After Python 3.11+ is installed:
+
+```powershell
+py -m venv .venv
+.venv\Scripts\Activate.ps1
+py -m pip install -e .[dev]
+py -m de_portfolio_pipeline.utils.run_pipeline
+streamlit run dashboard/app.py
+```
+
+## Current Scope
+
+The starter version now includes:
+
+- ingestion for Amsterdam, Paris, and Berlin
+- raw JSON storage per city
+- a bronze DuckDB table with hourly weather data
+- a gold SQL summary table with daily averages per city
+- a small Streamlit dashboard with a city selector
+
+That is already enough for a strong first portfolio project once it runs cleanly and you can explain the flow.

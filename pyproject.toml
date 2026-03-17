@@ -1,0 +1,33 @@
+[project]
+name = "de-portfolio-pipeline"
+version = "0.1.0"
+description = "A beginner-friendly data engineering portfolio project using public APIs, DuckDB, and Streamlit."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "duckdb>=1.2.0",
+    "pandas>=2.2.0",
+    "plotly>=6.0.0",
+    "requests>=2.32.0",
+    "streamlit>=1.44.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "ruff>=0.11.0",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-p no:cacheprovider"
