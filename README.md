@@ -79,7 +79,6 @@ dashboard/              <- Streamlit app with KPIs and charts
 
 You can adapt this for your CV later:
 
-> Built an end-to-end data pipeline in Python and DuckDB that ingested weather and air quality data from public APIs, transformed it into analytics-ready tables, applied data quality checks, and surfaced KPIs in a dashboard.
 > Built an end-to-end historical weather pipeline in Python and DuckDB that ingested public API data for multiple cities, transformed it into analytics-ready tables, and surfaced comparative metrics in an interactive dashboard.
 
 ## Recommended Build Order
