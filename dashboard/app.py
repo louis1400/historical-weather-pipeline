@@ -394,13 +394,14 @@ else:
     st.markdown(
         f"""
         <div class="top-panel">
-            <div class="top-kicker">Data Engineering Portfolio Demo</div>
-            <div class="top-title">Historical Weather Dashboard</div>
-            <p class="top-copy">
-                Compare recent recorded weather observations across Amsterdam, Berlin, and Paris.
-                The dashboard focuses on readability first: controls live in the sidebar, the table is trimmed to the
-                values that matter most, and the charts use clean lines without distracting markers.
-            </p>
+        <div class="top-kicker">Data Engineering Portfolio Demo</div>
+        <div class="top-title">Historical Weather Dashboard</div>
+        <p class="top-copy">
+            Compare recent recorded weather observations across Amsterdam, Berlin, and Paris.
+            This project is intentionally small and factual: it demonstrates ingestion, storage, transformation,
+            inspection, and presentation with real historical data, without pretending to be a forecasting or
+            production-scale platform.
+        </p>
             <div class="pill-row">
                 <div class="pill">{len(selected_cities)} cities selected</div>
                 <div class="pill">{selected_window_label}</div>

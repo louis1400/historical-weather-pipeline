@@ -1,179 +1,138 @@
-# Data Engineering Portfolio Project
+# Historical Weather Data Pipeline
 
-This repository is a practical first data engineering project you can use to show employers that you understand the core workflow:
+This repository is a small, honest data engineering portfolio project.
 
-- ingest data from external APIs
-- store raw and cleaned data in layers
-- transform data into analytics-ready tables
-- validate data quality
-- present business metrics in a small dashboard
+The goal is not to look "enterprise" for the sake of it. The goal is to show that I can take real external data, ingest it, model it, store it, inspect it, and present it clearly.
 
-## Project Idea
+## Vision
 
-Build a **Historical Weather Analytics Pipeline** for a few European cities.
+This project is meant to communicate:
 
-Why this is a strong first project:
+- I can work with real API data instead of only static CSV files
+- I understand the basic data engineering flow from ingestion to analytics output
+- I can keep a project readable, reproducible, and explainable
+- I can use tools like Codex and Git productively while still understanding the result
 
-- it uses real API data, which feels more professional than a toy CSV-only project
-- it demonstrates common data engineering patterns without needing cloud infrastructure on day one
-- it is realistic to finish as a student
-- it gives you a clean story to tell in interviews
+Just as importantly, this project is intentionally **not** trying to be:
 
-## What You Will Show
+- a forecasting system
+- a machine learning project
+- a cloud-heavy production platform
+- an overbuilt student project with features I cannot explain confidently
 
-By completing this project, you will be able to talk about:
+It is a compact historical weather pipeline built to make a credible first impression for entry-level data roles.
 
-- API ingestion with Python
-- layered data design: raw, bronze, silver, gold
-- SQL transformations in DuckDB
-- data quality checks
-- reproducible project structure
-- dashboarding and stakeholder-style metrics
-- using Codex to accelerate development responsibly
+## What The Project Does
 
-## Suggested Stack
+The current version:
 
-- Python
-- DuckDB
-- Pandas or Polars
-- SQL
-- Streamlit
-- `pytest`
+- pulls recent **historical** hourly weather data from the Open-Meteo archive API
+- tracks Amsterdam, Berlin, and Paris
+- stores raw JSON extracts in `data/raw/`
+- transforms hourly weather data into a DuckDB bronze table
+- creates a daily summary gold table in SQL
+- exposes a Streamlit dashboard for comparison across cities
+- includes a small CLI for inspecting the DuckDB database directly
 
-Optional later upgrades:
+The pipeline only keeps data up to the latest completed local hour, so the dashboard stays factual rather than implying future or forecasted observations.
 
-- Prefect for orchestration
-- dbt-duckdb for modeling
-- Docker
-- GitHub Actions
+## Why This Is A Good Portfolio Project
+
+This project demonstrates several practical skills that are relevant to junior data engineering work:
+
+- Python API ingestion
+- lightweight pipeline design
+- tabular transformation with pandas
+- SQL-based aggregation in DuckDB
+- data modeling with bronze and gold layers
+- local analytics tooling and database inspection
+- dashboarding with Streamlit and Plotly
+- Git and GitHub workflow for versioned project development
 
 ## Architecture
 
 ```text
-Open-Meteo APIs
+Open-Meteo Archive API
     |
     v
-data/raw/               <- unmodified API extracts
+data/raw/ JSON extracts
     |
     v
-data/bronze/            <- standardized schema, basic typing
+pandas transformation logic
     |
     v
-data/silver/            <- cleaned, deduplicated, enriched data
+DuckDB: weather_hourly_bronze
     |
     v
-data/gold/              <- analytics tables for dashboard/reporting
+SQL model: weather_daily_gold
     |
-    v
-dashboard/              <- Streamlit app with KPIs and charts
+    +--> Streamlit dashboard
+    |
+    +--> inspect_db CLI
 ```
 
-## Example Business Questions
+## Questions The Project Can Answer
 
-- Which city had the highest average PM2.5 level this month?
-- How often do poor air quality days coincide with high temperature days?
-- Which cities show the largest week-over-week change in air quality?
-- How many observations were missing or delayed by source?
+- Which city was warmest in the latest recorded hour?
+- Which city was most humid in the latest recorded hour?
+- How do hourly temperature and humidity trends compare across cities?
+- What were the daily average temperature and humidity values over the historical window?
+- How many hourly records were collected per city and time range?
 
-## Resume-Friendly Project Description
+## Resume-Friendly Description
 
 You can adapt this for your CV later:
 
-> Built an end-to-end historical weather pipeline in Python and DuckDB that ingested public API data for multiple cities, transformed it into analytics-ready tables, and surfaced comparative metrics in an interactive dashboard.
+> Built a historical weather data pipeline in Python and DuckDB that ingested public API data for multiple cities, transformed it into analytics-ready tables, and surfaced comparative metrics in an interactive dashboard.
 
-## Recommended Build Order
+## Tech Stack
 
-1. Get one API ingestion script working.
-2. Save the raw response locally.
-3. Flatten the data into tabular form.
-4. Load it into DuckDB.
-5. Create one clean analytics table in SQL.
-6. Add 2-3 data quality checks.
-7. Build a simple Streamlit dashboard.
-8. Add scheduling or orchestration if you still have time.
+- Python
+- DuckDB
+- pandas
+- SQL
+- Streamlit
+- Plotly
+- pytest
 
-## How To Talk About Codex
+Optional future extensions:
 
-The point is not "Codex wrote my code."
-The point is:
-
-- you used Codex to scaffold and speed up implementation
-- you reviewed and understood the code
-- you iterated on bugs, structure, and tests
-- you used AI as an engineering tool, not a substitute for judgment
-
-That is a very reasonable and modern story for a first job.
-
-## Starter Repo Layout
-
-```text
-src/de_portfolio_pipeline/
-  pipelines/
-  models/
-  quality/
-  utils/
-dashboard/
-data/
-  raw/
-  bronze/
-  silver/
-  gold/
-sql/
-tests/
-```
-
-## Next Steps
-
-- read `docs` in this README and the starter files
-- implement the API ingestion in `src/de_portfolio_pipeline/pipelines/ingest.py`
-- connect the transformation flow to DuckDB
-- add one dashboard page
-
-If you want, we can now build this project together step by step.
+- Windows Task Scheduler or Prefect for scheduled runs
+- dbt-duckdb for stronger SQL modeling structure
+- Docker for easier environment setup
+- GitHub Actions for automated checks
 
 ## Quickstart
-
-After Python 3.11+ is installed:
 
 ```powershell
 py -m venv .venv
 .venv\Scripts\Activate.ps1
 py -m pip install -e .[dev]
 py -m de_portfolio_pipeline.utils.run_pipeline
-streamlit run dashboard/app.py
-```
-
-Or start the dashboard with the helper script:
-
-```powershell
 .\start_dashboard.ps1
 ```
 
 What this currently does:
 
-- pulls the last 7 completed days of historical weather data
-- stores raw JSON extracts in `data/raw/`
-- loads hourly records into DuckDB
-- creates a daily summary table
-- serves a dashboard for comparing Amsterdam, Berlin, and Paris
+- ingests the last 7 days of historical hourly weather data
+- refreshes the DuckDB database locally
+- lets the dashboard compare recent hourly trends across the selected cities
 
 Dashboard refresh behavior:
 
-- the dashboard can auto-check for fresh data every hour while the browser tab is open
+- the dashboard can auto-check for fresh historical data every hour while the browser tab is open
 - there is also a manual `Refresh historical data now` action in the sidebar
-- if you want true background refresh even when the dashboard is closed, the next step would be a Windows Task Scheduler job
+- if I want true background refresh even when the dashboard is closed, the next step would be a scheduled task
 
 ## Inspecting The Database
 
 Do not open `portfolio.duckdb` in the browser. It is a database file, not a webpage.
 
-Use the built-in inspection helper instead:
+List available tables:
 
 ```powershell
 py -m de_portfolio_pipeline.utils.inspect_db
 ```
-
-That lists the available tables.
 
 Inspect one table:
 
@@ -181,21 +140,56 @@ Inspect one table:
 py -m de_portfolio_pipeline.utils.inspect_db --table weather_hourly_bronze
 ```
 
-Run your own SQL:
+Run a custom SQL query:
 
 ```powershell
 py -m de_portfolio_pipeline.utils.inspect_db --query "select city, min(timestamp) as start_ts, max(timestamp) as end_ts, count(*) as row_count from weather_hourly_bronze group by city order by city"
 ```
 
+## Repo Layout
+
+```text
+src/de_portfolio_pipeline/
+  pipelines/      <- API ingestion and transformation logic
+  models/         <- DuckDB loading helpers
+  quality/        <- simple data checks
+  utils/          <- pipeline and database inspection entry points
+dashboard/        <- Streamlit app
+sql/              <- SQL models for analytics tables
+tests/            <- lightweight automated checks
+data/             <- local raw and derived data folders
+```
+
 ## Current Scope
 
-The starter version now includes:
+The current project is intentionally modest in scope:
 
-- historical ingestion for Amsterdam, Paris, and Berlin
-- raw JSON storage per city
-- a bronze DuckDB table with hourly weather data
-- a gold SQL summary table with daily averages per city
-- a Streamlit dashboard with multi-city comparison
-- a terminal helper for inspecting the DuckDB database
+- one external data source
+- three cities
+- one primary hourly fact table
+- one daily summary table
+- one dashboard
+- one local database inspection helper
 
-That is already enough for a strong first portfolio project once it runs cleanly and you can explain the flow.
+That is enough to be credible, understandable, and discussable in an interview.
+
+## How To Talk About Codex
+
+The story is not "AI built my project for me."
+
+The better story is:
+
+- I used Codex to accelerate scaffolding and iteration
+- I reviewed the code and refined the product decisions myself
+- I used AI as part of a normal engineering workflow alongside Git, testing, and debugging
+
+That is a realistic and defensible story for a first professional project.
+
+## Likely Next Improvements
+
+If I continue this project, the most natural next steps are:
+
+- add another factual data source such as air quality
+- improve data quality checks and logging
+- schedule background refreshes outside the dashboard session
+- add a small change log or project notes section to document iterations

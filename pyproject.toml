@@ -1,7 +1,7 @@
 [project]
 name = "de-portfolio-pipeline"
 version = "0.1.0"
-description = "A beginner-friendly data engineering portfolio project using public APIs, DuckDB, and Streamlit."
+description = "A beginner-friendly historical weather data pipeline portfolio project using public APIs, DuckDB, and Streamlit."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
